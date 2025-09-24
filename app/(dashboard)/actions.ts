@@ -8,14 +8,3 @@ export async function deleteProgram(formData: FormData) {
   await deleteWorkoutProgram(id);
   revalidatePath('/programs');
 }
-
-// Placeholder for future fitness-related server actions
-export async function createWorkoutSession(formData: FormData) {
-  // TODO: Implement workout session creation
-  revalidatePath('/dashboard');
-}
-
-export async function logExercise(formData: FormData) {
-  // TODO: Implement exercise logging
-  revalidatePath('/workouts');
-}
