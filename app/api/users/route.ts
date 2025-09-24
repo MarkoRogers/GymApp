@@ -1,17 +1,15 @@
 // app/api/users/route.ts
 import { NextResponse } from "next/server";
+import { db, users } from "@/lib/db";
 
 export async function GET() {
+  if (!db) {
+    return NextResponse.json({ error: "Database not initialized" }, { status: 500 });
+  }
+
   try {
-    // Connect to your Neon database
-    const res = await fetch(process.env.DATABASE_URL!, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      // This is a placeholder; in reality you will need a Postgres client to query
-    });
-    
-    // For now, just return a test response
-    return NextResponse.json([{ id: 1, email: "me@site.com", name: "Me", username: "username" }]);
+    const allUsers = await db.select().from(users);
+    return NextResponse.json(allUsers);
   } catch (err) {
     console.error(err);
     return NextResponse.json({ error: "Failed to fetch users" }, { status: 500 });
