@@ -26,7 +26,7 @@ if (process.env.DATABASE_URL) {
 
 export { db };
 
-// Example schema
+// ---------------- Products Table ----------------
 export const statusEnum = pgEnum("status", ["active", "inactive", "archived"]);
 
 export const products = pgTable("products", {
@@ -50,11 +50,8 @@ export async function getProducts(
   newOffset: number | null;
   totalProducts: number;
 }> {
-  if (!db) {
-    return { products: [], newOffset: null, totalProducts: 0 };
-  }
+  if (!db) return { products: [], newOffset: null, totalProducts: 0 };
 
-  // Search mode
   if (search) {
     return {
       products: await db
@@ -67,10 +64,7 @@ export async function getProducts(
     };
   }
 
-  // Paging mode
-  if (offset === null) {
-    return { products: [], newOffset: null, totalProducts: 0 };
-  }
+  if (offset === null) return { products: [], newOffset: null, totalProducts: 0 };
 
   const totalProducts = await db.select({ count: count() }).from(products);
   const moreProducts = await db.select().from(products).limit(5).offset(offset);
@@ -86,4 +80,33 @@ export async function getProducts(
 export async function deleteProductById(id: number) {
   if (!db) return;
   await db.delete(products).where(eq(products.id, id));
+}
+
+// ---------------- Users Table ----------------
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
+  email: text("email").notNull(),
+  name: text("name"),
+  username: text("username"),
+});
+
+export type SelectUser = typeof users.$inferSelect;
+
+// Fetch all users
+export async function getUsers(): Promise<SelectUser[]> {
+  if (!db) return [];
+  return db.select().from(users);
+}
+
+// Insert test user (will skip if already exists)
+export async function insertTestUser() {
+  if (!db) return;
+  await db
+    .insert(users)
+    .values({
+      email: "me@site.com",
+      name: "Me",
+      username: "username",
+    })
+    .onConflictDoNothing();
 }
