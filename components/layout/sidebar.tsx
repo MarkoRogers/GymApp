@@ -21,7 +21,7 @@ import {
 import { Button } from '@/components/ui/button';
 
 const navigation = [
-  { name: 'Dashboard', href: '/', icon: Home },
+  { name: 'Dashboard', href: '/dashboard', icon: Home },,
   { name: 'Workouts', href: '/workouts', icon: Dumbbell },
   { name: 'Programs', href: '/programs', icon: Calendar },
   { name: 'Progress', href: '/progress', icon: TrendingUp },
