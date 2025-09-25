@@ -1,16 +1,22 @@
-export default {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    serverComponentsExternalPackages: ['bcryptjs']
+  },
   images: {
+    domains: ['localhost'],
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'avatars.githubusercontent.com',
-        search: ''
+        hostname: '**',
       },
-      {
-        protocol: 'https',
-        hostname: '*.public.blob.vercel-storage.com',
-        search: ''
-      }
-    ]
-  }
-};
+    ],
+  },
+  output: 'standalone',
+  trailingSlash: false,
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+}
+
+module.exports = nextConfig
