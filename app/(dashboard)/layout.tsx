@@ -1,3 +1,9 @@
+"use client";
+
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  return <>{children}</>;
+}
+
 import Link from 'next/link';
 import {
   Home,
