@@ -1,13 +1,8 @@
-import { redirect } from "next/navigation";
-import { auth } from "@/lib/auth";
-import DashboardClient from "./DashboardClient";
-
-export default async function DashboardPage() {
-  const session = await auth();
-
-  if (!session?.user) {
-    redirect("/login");
-  }
-
-  return <DashboardClient session={session} />;
+export default function DashboardPage() {
+  return (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+      <p>Welcome to your training dashboard!</p>
+    </div>
+  );
 }
