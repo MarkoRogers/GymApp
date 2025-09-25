@@ -253,9 +253,7 @@ export async function getExercises(
 ) {
   if (!db) return [];
   
-  let query = db.select().from(exercises);
-  
-  const conditions = [];
+  let conditions = [];
   
   if (search) {
     conditions.push(ilike(exercises.name, `%${search}%`));
@@ -273,10 +271,17 @@ export async function getExercises(
   }
   
   if (conditions.length > 0) {
-    query = query.where(and(...conditions));
+    return db
+      .select()
+      .from(exercises)
+      .where(and(...conditions))
+      .orderBy(exercises.name);
   }
   
-  return query.orderBy(exercises.name);
+  return db
+    .select()
+    .from(exercises)
+    .orderBy(exercises.name);
 }
 
 // Get user's body measurements
