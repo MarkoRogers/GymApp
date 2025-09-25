@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import { signIn } from '@/lib/auth';
+import { signIn } from '@/auth';
 
 export default function LoginPage() {
   return (
@@ -23,7 +23,7 @@ export default function LoginPage() {
             action={async () => {
               'use server';
               await signIn('github', {
-                redirectTo: '/'
+                redirectTo: '/dashboard'
               });
             }}
             className="w-full"
