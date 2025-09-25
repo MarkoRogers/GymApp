@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { auth, signOut } from '@/lib/auth';
+import { auth, signOut } from '@/auth';
 import Image from 'next/image';
 import {
   DropdownMenu,
@@ -24,7 +24,7 @@ export async function User() {
           className="overflow-hidden rounded-full"
         >
           <Image
-            src={user?.image ?? '/placeholder-user.jpg'}
+            src={user?.image ?? '/placeholder.svg'}
             width={36}
             height={36}
             alt="Avatar"
