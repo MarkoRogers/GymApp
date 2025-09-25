@@ -2,19 +2,11 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  Activity,
-  Calendar,
-  Target,
-  TrendingUp,
-  Dumbbell,
-  Trophy,
-  Flame,
-  Clock
-} from "lucide-react";
+import { Activity, Calendar, Target, TrendingUp, Dumbbell, Trophy, Flame, Clock } from "lucide-react";
+import { Session } from "next-auth";
 
 interface DashboardClientProps {
-  session: { user: { name?: string } };
+  session: Session;
 }
 
 export default function DashboardClient({ session }: DashboardClientProps) {
@@ -32,7 +24,7 @@ export default function DashboardClient({ session }: DashboardClientProps) {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
-            Welcome back, {session.user.name?.split(" ")[0] || "Athlete"}!
+            Welcome back, {session.user?.name?.split(" ")[0] || "Athlete"}!
           </h1>
           <p className="text-muted-foreground">
             Here's your fitness overview for today
@@ -45,7 +37,6 @@ export default function DashboardClient({ session }: DashboardClientProps) {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {/* Stats cards */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">This Week</CardTitle>
@@ -53,9 +44,7 @@ export default function DashboardClient({ session }: DashboardClientProps) {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.workoutsThisWeek}</div>
-            <p className="text-xs text-muted-foreground">
-              of {stats.weeklyGoal} workouts
-            </p>
+            <p className="text-xs text-muted-foreground">of {stats.weeklyGoal} workouts</p>
           </CardContent>
         </Card>
 
